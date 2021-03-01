@@ -21,33 +21,6 @@ def is_clockwise(polygon, check_convexity=False):
     if len(polygon) < 3:
         raise ValueError(f"Polygon {polygon} contains less than 3 vertices")
 
-    def _is_clockwise(v1, v2, v3):
-        """
-        Return whether or not polygon around v2 vertex is clockwise oriented or not.
-
-        :param tuple[int, int] v1: the previous vertex
-        :param tuple[int, int] v2: the vertex which for we want the angle
-        :param tuple[int, int] v3: the next vertex
-        :return: whether or not v2 vertex is clockwise oriented. If angle is 180°, return ``None``
-        :rtype: bool|None
-        :raises ValueError: if angle is 0° (the polygon is not convex)
-        """
-        v2_v1 = (v1[0] - v2[0], v1[1] - v2[1])
-        v2_v3 = (v3[0] - v2[0], v3[1] - v2[1])
-        cross_product = v2_v1[0] * v2_v3[1] - v2_v1[1] * v2_v3[0]
-        if cross_product == 0:
-            if v1 == v2 or v2 == v3:
-                return None  # not real angle as 2 consecutive vertices are combined
-            # Collinear vectors. Check if angle is 0° or 180°
-            if v2_v1[0] == 0:
-                is_null_angle = (v2_v1[1] > 0) == (v2_v3[1] > 0)  # same sign
-            else:
-                is_null_angle = (v2_v1[0] > 0) == (v2_v3[0] > 0)  # same signe
-            if is_null_angle:
-                raise ValueError(f"Polygon is not convex for consecutive vertices [{v1}, {v2}, {v3}]")
-            return None  # flat angle
-        return cross_product < 0
-
     polygon = [polygon[-1]] + polygon + [polygon[0]]
     found_results = set()
     for idx in range(1, len(polygon) - 1):
@@ -61,3 +34,31 @@ def is_clockwise(polygon, check_convexity=False):
     if len(found_results) > 1:
         raise ValueError(f"Polygon {polygon} is not convex")
     return found_results.pop()
+
+
+def _is_clockwise(v1, v2, v3):
+    """
+    Return whether or not polygon around v2 vertex is clockwise oriented or not.
+
+    :param tuple[int, int] v1: the previous vertex
+    :param tuple[int, int] v2: the vertex which for we want the angle
+    :param tuple[int, int] v3: the next vertex
+    :return: whether or not v2 vertex is clockwise oriented. If angle is 180°, return ``None``
+    :rtype: bool|None
+    :raises ValueError: if angle is 0° (the polygon is not convex)
+    """
+    v2_v1 = (v1[0] - v2[0], v1[1] - v2[1])
+    v2_v3 = (v3[0] - v2[0], v3[1] - v2[1])
+    cross_product = v2_v1[0] * v2_v3[1] - v2_v1[1] * v2_v3[0]
+    if cross_product == 0:
+        if v1 == v2 or v2 == v3:
+            return None  # not real angle as 2 consecutive vertices are combined
+        # Collinear vectors. Check if angle is 0° or 180°
+        if v2_v1[0] == 0:
+            is_null_angle = (v2_v1[1] > 0) == (v2_v3[1] > 0)  # same sign
+        else:
+            is_null_angle = (v2_v1[0] > 0) == (v2_v3[0] > 0)  # same signe
+        if is_null_angle:
+            raise ValueError(f"Polygon is not convex for consecutive vertices [{v1}, {v2}, {v3}]")
+        return None  # flat angle
+    return cross_product < 0

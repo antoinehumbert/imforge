@@ -11,7 +11,7 @@ from pimento.cut import cut_out as _cut_out
 from pimento.utils import is_clockwise
 
 
-def crop(image, polygon, fillcolor=None, cut_out=False, clip=False):
+def crop(image, polygon, fillcolor=None, cut_out=False, clip=False):  # noqa: C901
     """
     Crop image according to given (convex) polygon.
 
