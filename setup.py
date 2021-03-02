@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 requirements = [
-    "pillow", "opencv-python-headless", "numpy", "pyclipper",
+    "pillow~=8.1", "opencv-python-headless~=4.5", "numpy~=1.20", "pyclipper~=1.2",
 ]
 
 tests_requirements = [
@@ -14,7 +14,7 @@ lint_requirements = [
 ]
 
 doc_requirements = [
-    "sphinx"
+    "sphinx", "sphinx_rtd_theme",
 ]
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -29,6 +29,7 @@ setup(
     license='Apache License 2.0',
     author='Antoine HUMBERT',
     author_email='antoine.humbert.dev@gmail.com',
+    keywords=["Imaging"],
     description='Python IMage ENhanced TOols',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -39,6 +40,7 @@ setup(
         "Operating System :: OS Independent",
         "Topic :: Multimedia :: Graphics",
     ],
+    python_requires=">=3.6",
     install_requires=requirements,
     extras_require={
         "tests": tests_requirements,
