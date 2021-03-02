@@ -10,34 +10,34 @@ class TestCutout:
     DEBUG = False
 
     def test_cut_out_one_polygon_no_fill_color(self, resources):
-        expected_result = resources / "pimento" / "cut" / "expected" / "cut_out_one_polygon_no_fill_color.jpg"
+        expected_result = resources / "pimento" / "cut" / "expected" / "cut_out_one_polygon_no_fill_color.png"
         polygon = [(15, 8), (368, 78), (325, 161), (14, 71)]
         with Image.open(resources / "some_text.jpg") as image:
             cut_out(image, polygon)
             if self.DEBUG:
                 image.show()
                 if not expected_result.exists():
-                    image.save(expected_result)
+                    image.save(expected_result, optimize=True)
             image_bytes = BytesIO()
-            image.save(image_bytes, format="jpeg")
+            image.save(image_bytes, format="png", optimize=True)
         image_bytes.seek(0)
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_cut_out_no_polygon(self, resources):
-        expected_result = resources / "pimento" / "cut" / "expected" / "cut_out_no_polygon.jpg"
+        expected_result = resources / "pimento" / "cut" / "expected" / "cut_out_no_polygon.png"
         with Image.open(resources / "some_text.jpg") as image:
             cut_out(image)
             if self.DEBUG:
                 image.show()
                 if not expected_result.exists():
-                    image.save(expected_result)
+                    image.save(expected_result, optimize=True)
             image_bytes = BytesIO()
-            image.save(image_bytes, format="jpeg")
+            image.save(image_bytes, format="png", optimize=True)
         image_bytes.seek(0)
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_cut_out_multi_polygon_and_color(self, resources):
-        expected_result = resources / "pimento" / "cut" / "expected" / "cut_out_muti_polygon_and_color.jpg"
+        expected_result = resources / "pimento" / "cut" / "expected" / "cut_out_muti_polygon_and_color.png"
         polygons = (
             [(15, 8), (368, 78), (325, 161), (14, 71)],
             [(100, 0), (150, 0), (125, 20)],
@@ -48,8 +48,8 @@ class TestCutout:
             if self.DEBUG:
                 image.show()
                 if not expected_result.exists():
-                    image.save(expected_result)
+                    image.save(expected_result, optimize=True)
             image_bytes = BytesIO()
-            image.save(image_bytes, format="jpeg")
+            image.save(image_bytes, format="png", optimize=True)
         image_bytes.seek(0)
         assert image_bytes.read() == expected_result.read_bytes()
