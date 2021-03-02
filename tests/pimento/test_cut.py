@@ -2,7 +2,7 @@ from io import BytesIO
 
 from PIL import Image
 
-from pimento.cut import cut_out
+from imforge.cut import cut_out
 
 
 class TestCutout:
@@ -10,7 +10,7 @@ class TestCutout:
     DEBUG = False
 
     def test_cut_out_one_polygon_no_fill_color(self, resources):
-        expected_result = resources / "pimento" / "cut" / "expected" / "cut_out_one_polygon_no_fill_color.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_one_polygon_no_fill_color.png"
         polygon = [(15, 8), (368, 78), (325, 161), (14, 71)]
         with Image.open(resources / "some_text.jpg") as image:
             cut_out(image, polygon)
@@ -24,7 +24,7 @@ class TestCutout:
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_cut_out_no_polygon(self, resources):
-        expected_result = resources / "pimento" / "cut" / "expected" / "cut_out_no_polygon.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_no_polygon.png"
         with Image.open(resources / "some_text.jpg") as image:
             cut_out(image)
             if self.DEBUG:
@@ -37,7 +37,7 @@ class TestCutout:
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_cut_out_multi_polygon_and_color(self, resources):
-        expected_result = resources / "pimento" / "cut" / "expected" / "cut_out_muti_polygon_and_color.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_muti_polygon_and_color.png"
         polygons = (
             [(15, 8), (368, 78), (325, 161), (14, 71)],
             [(100, 0), (150, 0), (125, 20)],

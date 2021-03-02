@@ -7,8 +7,8 @@ import numpy as np
 import pyclipper
 from PIL import Image
 
-from pimento.cut import cut_out as _cut_out
-from pimento.utils import is_clockwise
+from imforge.cut import cut_out as _cut_out
+from imforge.utils import is_clockwise
 
 
 def crop(image, polygon, fillcolor=None, cut_out=False, clip=False):  # noqa: C901

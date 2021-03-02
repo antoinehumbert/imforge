@@ -1,5 +1,5 @@
 import pytest
-from pimento.utils import is_clockwise
+from imforge.utils import is_clockwise
 
 
 class TestIsClockwise:
