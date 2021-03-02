@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 requirements = [
-    "pillow~=8.1", "opencv-python-headless~=4.5", "numpy~=1.20", "pyclipper~=1.2",
+    "pillow~=8.1", "opencv-python-headless~=4.5", "numpy~=1.19", "pyclipper~=1.2",
 ]
 
 tests_requirements = [
