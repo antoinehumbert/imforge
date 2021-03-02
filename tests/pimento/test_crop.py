@@ -10,16 +10,16 @@ class TestCrop:
     DEBUG = False
 
     def test_crop_1(self, resources):
-        expected_result = resources / "pimento" / "crop" / "expected" / "crop_1.jpg"
+        expected_result = resources / "pimento" / "crop" / "expected" / "crop_1.png"
         crop_box = [(15, 8), (368, 78), (325, 161), (14, 71)]
         with Image.open(resources / "some_text.jpg") as image:
             cropped_image = crop(image, crop_box)
             if self.DEBUG:
                 cropped_image.show()
                 if not expected_result.exists():
-                    cropped_image.save(expected_result)
+                    cropped_image.save(expected_result, optimize=True)
             image_bytes = BytesIO()
-            cropped_image.save(image_bytes, format="jpeg")
+            cropped_image.save(image_bytes, format="png", optimize=True)
         image_bytes.seek(0)
         assert image_bytes.read() == expected_result.read_bytes()
 
