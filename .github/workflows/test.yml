@@ -37,6 +37,8 @@ jobs:
       run: pytest --cov
     - name: Upload coverage
       run: bash <(curl -s https://codecov.io/bash) -F ${{ matrix.codecov-flag }}
+      env:
+        CODECOV_NAME: ${{ matrix.os }} Python ${{ matrix.python-version }}
 
   build_win:
 
