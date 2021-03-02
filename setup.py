@@ -9,6 +9,10 @@ tests_requirements = [
     "pytest", "pytest-cov"
 ]
 
+lint_requirements = [
+    "flake8",
+]
+
 doc_requirements = [
     "sphinx"
 ]
@@ -33,6 +37,7 @@ setup(
     install_requires=requirements,
     extras_require={
         "tests": tests_requirements,
+        "lint": lint_requirements,
         "doc": doc_requirements,
     }
 )
