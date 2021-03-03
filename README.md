@@ -8,7 +8,7 @@ ImForge is a library containing high level functionalities for manipulation of i
 [![Test](https://github.com/antoinehumbert/imforge/actions/workflows/test.yml/badge.svg)](https://github.com/antoinehumbert/imforge/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/antoinehumbert/imforge/branch/develop/graph/badge.svg?token=90FVQSXYS9&flag=GHA_Ubuntu)](https://codecov.io/gh/antoinehumbert/imforge)
 [![Build + Deploy](https://github.com/antoinehumbert/imforge/actions/workflows/build.yml/badge.svg)](https://github.com/antoinehumbert/imforge/actions/workflows/build.yml)
-[![PyPI](https://img.shields.io/pypi/v/imforge)](https://pypi.org/project/imforge/)
+[![PyPI](https://img.shields.io/pypi/v/imforge.svg)](https://pypi.org/project/imforge/)
 [![Documentation Status](https://readthedocs.org/projects/imforge/badge/?version=latest)](https://imforge.readthedocs.io/en/latest/?badge=latest)
 
 ## Overview
