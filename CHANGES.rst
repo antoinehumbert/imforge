@@ -1,7 +1,7 @@
 Changelog (ImForge)
 ===================
 
-0.1.0 (unreleased)
+0.1.2 (2021-03-03)
 ------------------
 
 Initial version of the library with following functionalities:
