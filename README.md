@@ -7,7 +7,9 @@ ImForge is a library containing high level functionalities for manipulation of i
 [![Lint](https://github.com/antoinehumbert/imforge/actions/workflows/lint.yml/badge.svg)](https://github.com/antoinehumbert/imforge/actions/workflows/lint.yml)
 [![Test](https://github.com/antoinehumbert/imforge/actions/workflows/test.yml/badge.svg)](https://github.com/antoinehumbert/imforge/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/antoinehumbert/imforge/branch/develop/graph/badge.svg?token=90FVQSXYS9&flag=GHA_Ubuntu)](https://codecov.io/gh/antoinehumbert/imforge)
-![PyPI](https://img.shields.io/pypi/v/imforge)
+[![Build + Deploy](https://github.com/antoinehumbert/imforge/actions/workflows/build.yml/badge.svg)](https://github.com/antoinehumbert/imforge/actions/workflows/build.yml)
+[![PyPI](https://img.shields.io/pypi/v/imforge)](https://pypi.org/project/imforge/)
+[![Documentation Status](https://readthedocs.org/projects/imforge/badge/?version=latest)](https://imforge.readthedocs.io/en/latest/?badge=latest)
 
 ## Overview
 
@@ -17,3 +19,8 @@ It works on Pillow images, and used some functions of OpenCv for advanced proces
 
 ## More information
 
+- [Documentation](https://imforge.readthedocs.io/)
+- Contribute
+  - [Issues](https://github.com/antoinehumbert/imforge/issues)
+  - [Pull requests](https://github.com/antoinehumbert/imforge/pulls)
+- [Changelog](https://github.com/antoinehumbert/imforge/blob/master/CHANGES.rst)
