@@ -2,7 +2,7 @@
 
 ## Images Forge
 
-ImForge is a library containing high level functionalities for manipulation of images, on top of Pillow (and OpenCv).
+ImForge is a library containing high level functionalities for manipulation of images, on top of Pillow, and OpenCv.
 
 [![Lint](https://github.com/antoinehumbert/imforge/actions/workflows/lint.yml/badge.svg)](https://github.com/antoinehumbert/imforge/actions/workflows/lint.yml)
 [![Test](https://github.com/antoinehumbert/imforge/actions/workflows/test.yml/badge.svg)](https://github.com/antoinehumbert/imforge/actions/workflows/test.yml)
@@ -15,7 +15,7 @@ ImForge is a library containing high level functionalities for manipulation of i
 
 The ImForge library provides a variety of high level functionalities empowering the manipulation of images in Python.
 
-It works on Pillow images, and used some functions of OpenCv for advanced processing.
+It works on Pillow images as well as OpenCv images (i.e. numpy arrays).
 
 ## More information
 

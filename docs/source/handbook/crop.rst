@@ -22,7 +22,12 @@ The :py:mod:`imforge.crop` module contains functions for image cropping.
   polygon is oriented clockwise, the cropped image have same orientation as original image. If polygon is oriented
   counter-clockwise, the cropped image is flipped (as if it was seen from the back of the original image).
 
-  Sample usage:
+  .. note::
+
+     The fill color is not necessarily an RGB color. It depends on the color space of the processed image.
+     In particular, OpenCv images are usually opened in BGR mode, so the fill color must be a BGR value in such case.
+
+  Sample (pillow) usage:
 
   .. code-block:: python
 
@@ -40,3 +45,32 @@ The :py:mod:`imforge.crop` module contains functions for image cropping.
          # original image pixels out of crop_box are also replaced with purple color
          # the crop box is clipped to original image size to minify the filled area in cropped image
          cropped_image = crop(image, crop_box, fillcolor=(255, 0, 255), cut_out=True, clip=True)
+
+  .. note::
+
+     Calling :py:func:`imforge.crop.crop` with a :py:class:`PIL image<PIL.Image.Image>` is the same as calling
+     :py:func:`imforge.crop.crop_pil`.
+
+  Sample (opencv) usage:
+
+  .. code-block:: python
+
+     import cv2
+     from imforge.crop import crop
+
+     image = cv2.imread("/path/to/image.jpg", cv2.IMREAD_UNCHANGED)
+     crop_box = [(15, 8), (368, 78), (325, 161), (14, 71)]
+     # out of image area is filled with default fillcolor (black)
+     # original image pixels out of crop_box but inside result cropped image are left as is
+     cropped_image = crop(image, crop_box)
+     #
+     crop_box = [(-15, 0), (368, 78), (325, 161), (14, 71)]
+     # Out of image area is filled with purple color
+     # original image pixels out of crop_box are also replaced with purple color
+     # the crop box is clipped to original image size to minify the filled area in cropped image
+     cropped_image = crop(image, crop_box, fillcolor=(255, 0, 255), cut_out=True, clip=True)
+
+  .. note::
+
+     Calling :py:func:`imforge.crop.crop` with an OpenCv image (i.e. a :py:class:`NumPy array<numpy.ndarray>`) is the
+     same as calling :py:func:`imforge.crop.crop_cv2`.
