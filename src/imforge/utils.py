@@ -1,3 +1,5 @@
+import pyclipper
+
 
 def is_clockwise(polygon, check_convexity=False):
     """
@@ -8,7 +10,7 @@ def is_clockwise(polygon, check_convexity=False):
     If ``check_convexity`` is True, then we check orientation for all vertices and they must all have the same
     orientation (i.e. the polygon is convex)
 
-    :param list[tuple[int, int]] polygon: the list of polygon vertices which for we want orientation
+    :param list[tuple[int,int]] polygon: the list of polygon vertices which for we want orientation
     :param bool check_convexity: specify whether or not we have to check convexity of polygon. If False (the default)
       we compute orientation based on the first vertex.
     :return: ``True`` if polygon is clockwise oriented. ``False`` if it is counterclockwise oriented.
@@ -40,11 +42,11 @@ def _is_clockwise(v1, v2, v3):
     """
     Return whether or not polygon around v2 vertex is clockwise oriented or not.
 
-    :param tuple[int, int] v1: the previous vertex
-    :param tuple[int, int] v2: the vertex which for we want the angle
-    :param tuple[int, int] v3: the next vertex
+    :param tuple[int,int] v1: the previous vertex
+    :param tuple[int,int] v2: the vertex which for we want the angle
+    :param tuple[int,int] v3: the next vertex
     :return: whether or not v2 vertex is clockwise oriented. If angle is 180°, return ``None``
-    :rtype: bool|None
+    :rtype: Union[bool,None]
     :raises ValueError: if angle is 0° (the polygon is not convex)
     """
     v2_v1 = (v1[0] - v2[0], v1[1] - v2[1])
@@ -62,3 +64,23 @@ def _is_clockwise(v1, v2, v3):
             raise ValueError(f"Polygon is not convex for consecutive vertices [{v1}, {v2}, {v3}]")
         return None  # flat angle
     return cross_product < 0
+
+
+def clip_polygon(polygon, width, height):
+    """
+    Clip given polygon with rectangle of given width and height.
+
+    :param list[tuple[int,int]] polygon: the list of points coordinates of the polygon to clip
+    :param int width: width of the clipping rectangle
+    :param int height: height of the clipping rectangle
+    :return: the clipped polygon
+    :rtype: list[tuple[int,int]]
+    """
+    right = width - 1
+    bottom = height - 1
+    rect = ((0, 0), (right, 0), (right, bottom), (0, bottom))
+    pc = pyclipper.Pyclipper()
+    pc.AddPath(rect, pyclipper.PT_CLIP, True)
+    pc.AddPath(polygon, pyclipper.PT_SUBJECT, True)
+    clipped_paths = pc.Execute(pyclipper.CT_INTERSECTION, pyclipper.PFT_EVENODD, pyclipper.PFT_EVENODD)
+    return [point for path in clipped_paths for point in path]
