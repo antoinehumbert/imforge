@@ -9,7 +9,7 @@ from imforge.cut import cut_out_pil, cut_out_cv2
 from imforge.utils import is_clockwise, clip_polygon
 
 
-def _get_transforms_params(polygon, im_width, im_height, clip=False, for_pil=False):
+def _get_transforms_params(polygon, im_width, im_height, clip=False):  # noqa
     """
     Compute the parameters for the different transformations to apply for cropping polygon in an image of given width
     and height. The following transformations are to be applied on the image from crop:
@@ -44,9 +44,6 @@ def _get_transforms_params(polygon, im_width, im_height, clip=False, for_pil=Fal
       coordinates are outside of the original image, which can lead to a large image with areas filled with fillcolor on
       edges of cropped image. If ``True``, the polygon is first clipped to the original image box, thus leading to the
       minimal cropped image containing all the *visible* parts of polygon in original image.
-    :param bool for_pil: change center coordinates for compatibility with PIL.Image.rotate as the minAreaRect center is
-      not the exact center of the rectangle. It's compatible with cv2 rotation, but not with PIL which require the exact
-      center
     :return: parameters of the transformations to apply for crop in the form
       ((left_add, top_add, new_width, new_height), ((center_x, center_y), angle), (left, top, width, height))
     :rtype: tuple[tuple[int, int, int, int], tuple[tuple[float, float], float], tuple[int, int, int, int]]
@@ -102,6 +99,7 @@ def _get_transforms_params(polygon, im_width, im_height, clip=False, for_pil=Fal
     if left < 0:
         left_add = -left
         left = 0
+        center_x += left_add
         right += left_add
         new_width += left_add
     if right >= new_width:
@@ -109,19 +107,11 @@ def _get_transforms_params(polygon, im_width, im_height, clip=False, for_pil=Fal
     if top < 0:
         top_add = -top
         top = 0
+        center_y += top_add
         bottom += top_add
         new_height += top_add
     if bottom >= new_height:
         new_height = bottom + 1  # Add 1 so that bottom edge is included in image
-
-    if for_pil:
-        # recompute center because the center computed by minAreaRect seems not to be the exact center (as if right and
-        # bottom edges of the rectangle are not included in the crop box)
-        center_x = left + (right + 1 - left) / 2
-        center_y = top + (bottom + 1 - top) / 2
-    else:
-        center_x += left_add
-        center_y += top_add
 
     return (
         (left_add, top_add, new_width, new_height),
@@ -161,19 +151,20 @@ def crop_pil(image, polygon, fillcolor=None, cut_out=False, clip=False):
     # using expand=True in PIL.Image.Image.rotate assumes that center is the center of image, so it does not give
     # correct result when center is near an image side. This is the reason why we manually apply a first transform to
     # resize image before rotation and crop.
-    resize_params, rotate_params, crop_params = _get_transforms_params(
-        polygon, im_width, im_height, clip=clip, for_pil=True
-    )
-    center, angle = rotate_params
+    resize_params, rotate_params, crop_params = _get_transforms_params(polygon, im_width, im_height, clip=clip)
+    _, angle = rotate_params
     left_add, top_add, new_width, new_height = resize_params
     if left_add > 0 or top_add > 0 or new_width > im_width or new_height > im_height:
         image = image.transform(
             size=(new_width, new_height), method=Image.AFFINE, data=(1, 0, -left_add, 0, 1, -top_add),
             fillcolor=fillcolor
         )
-    if angle != 0:
-        image = image.rotate(angle, resample=Image.BICUBIC, expand=False, center=center, fillcolor=fillcolor)
     left, top, right, bottom = crop_params
+    if angle != 0:
+        # recompute center because the center computed by minAreaRect seems not to be the exact center (as if right and
+        # bottom edges of the rectangle are not included in the crop box). PIL.Image.rotate requires the exact center
+        center = (left + (right + 1 - left) / 2, top + (bottom + 1 - top) / 2)
+        image = image.rotate(angle, resample=Image.BICUBIC, expand=False, center=center, fillcolor=fillcolor)
     # Add 1 to include right and bottom edges in the cropped image
     image = image.crop((left, top, right + 1, bottom + 1))
     if flip:
