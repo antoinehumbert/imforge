@@ -11,7 +11,7 @@ class TestCutoutPil:
     DEBUG = False
 
     def test_cut_out_one_polygon_no_fill_color(self, resources):
-        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_one_polygon_no_fill_color_pil.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "pil" / "cut_out_one_polygon_no_fill_color.png"
         polygon = [(15, 8), (368, 78), (325, 161), (14, 71)]
         with Image.open(resources / "some_text.jpg") as image:
             cut_out_pil(image, polygon)
@@ -25,7 +25,7 @@ class TestCutoutPil:
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_cut_out_no_polygon(self, resources):
-        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_no_polygon_pil.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "pil" / "cut_out_no_polygon.png"
         with Image.open(resources / "some_text.jpg") as image:
             cut_out_pil(image)
             if self.DEBUG:
@@ -38,7 +38,7 @@ class TestCutoutPil:
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_cut_out_multi_polygon_and_color(self, resources):
-        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_muti_polygon_and_color_pil.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "pil" / "cut_out_muti_polygon_and_color.png"
         polygons = (
             [(15, 8), (368, 78), (325, 161), (14, 71)],
             [(100, 0), (150, 0), (125, 20)],
@@ -56,7 +56,7 @@ class TestCutoutPil:
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_generic_cut_out_multi_polygon_and_color(self, resources):
-        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_muti_polygon_and_color_pil.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "pil" / "cut_out_muti_polygon_and_color.png"
         polygons = (
             [(15, 8), (368, 78), (325, 161), (14, 71)],
             [(100, 0), (150, 0), (125, 20)],
@@ -79,7 +79,7 @@ class TestCutoutCv2:
     DEBUG = False
 
     def test_cut_out_one_polygon_no_fill_color(self, resources):
-        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_one_polygon_no_fill_color_cv2.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "cv2" / "cut_out_one_polygon_no_fill_color.png"
         polygon = [(15, 8), (368, 78), (325, 161), (14, 71)]
         image = cv2.imread(str(resources / "some_text.jpg"), cv2.IMREAD_UNCHANGED)
         cut_out_cv2(image, polygon)
@@ -95,7 +95,7 @@ class TestCutoutCv2:
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_cut_out_no_polygon(self, resources):
-        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_no_polygon_cv2.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "cv2" / "cut_out_no_polygon.png"
         image = cv2.imread(str(resources / "some_text.jpg"), cv2.IMREAD_UNCHANGED)
         cut_out_cv2(image)
         # Use PIL image for saving and comparison of result
@@ -110,7 +110,7 @@ class TestCutoutCv2:
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_cut_out_multi_polygon_and_color(self, resources):
-        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_muti_polygon_and_color_cv2.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "cv2" / "cut_out_muti_polygon_and_color.png"
         polygons = (
             [(15, 8), (368, 78), (325, 161), (14, 71)],
             [(100, 0), (150, 0), (125, 20)],
@@ -130,7 +130,7 @@ class TestCutoutCv2:
         assert image_bytes.read() == expected_result.read_bytes()
 
     def test_generic_out_multi_polygon_and_color(self, resources):
-        expected_result = resources / "imforge" / "cut" / "expected" / "cut_out_muti_polygon_and_color_cv2.png"
+        expected_result = resources / "imforge" / "cut" / "expected" / "cv2" / "cut_out_muti_polygon_and_color.png"
         polygons = (
             [(15, 8), (368, 78), (325, 161), (14, 71)],
             [(100, 0), (150, 0), (125, 20)],

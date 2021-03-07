@@ -1,3 +1,5 @@
+import pyclipper
+
 
 def is_clockwise(polygon, check_convexity=False):
     """
@@ -62,3 +64,23 @@ def _is_clockwise(v1, v2, v3):
             raise ValueError(f"Polygon is not convex for consecutive vertices [{v1}, {v2}, {v3}]")
         return None  # flat angle
     return cross_product < 0
+
+
+def clip_polygon(polygon, width, height):
+    """
+    Clip given polygon with rectangle of given width and height.
+
+    :param list[tuple[int, int]] polygon: the list of points coordinates of the polygon to clip
+    :param int width: width of the clipping rectangle
+    :param int height: height of the clipping rectangle
+    :return: the clipped polygon
+    :rtype: list[tuple[int, int]]
+    """
+    right = width - 1
+    bottom = height - 1
+    rect = ((0, 0), (right, 0), (right, bottom), (0, bottom))
+    pc = pyclipper.Pyclipper()
+    pc.AddPath(rect, pyclipper.PT_CLIP, True)
+    pc.AddPath(polygon, pyclipper.PT_SUBJECT, True)
+    clipped_paths = pc.Execute(pyclipper.CT_INTERSECTION, pyclipper.PFT_EVENODD, pyclipper.PFT_EVENODD)
+    return [point for path in clipped_paths for point in path]
