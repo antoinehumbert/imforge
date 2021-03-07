@@ -246,7 +246,7 @@ def crop(image, polygon, fillcolor=None, cut_out=False, clip=False):
       edges of cropped image. If ``True``, the polygon is first clipped to the original image box, thus leading to the
       minimal cropped image containing all the *visible* parts of polygon in original image.
     :return: the cropped image, in same format as input image
-    :rtype: PIL.Image.Image|numpy.ndarray
+    :rtype: Union[PIL.Image.Image,numpy.ndarray]
     """
     if isinstance(image, Image.Image):
         return crop_pil(image, polygon, fillcolor=fillcolor, cut_out=cut_out, clip=clip)
