@@ -10,8 +10,8 @@ def cut_out(image, *polygons, fillcolor=None):
     given fill color.
 
     :param image: the image to cut out
-    :type image: PIL.Image.Image|numpy.ndarray
-    :param list[tuple[int, int]] polygons: the polygons to cut out
+    :type image: Union[PIL.Image.Image,numpy.ndarray]
+    :param list[tuple[int,int]] polygons: the polygons to cut out
     :param fillcolor: the color to use for filling area outside of polygons
     """
     if isinstance(image, Image.Image):
@@ -26,7 +26,7 @@ def cut_out_pil(image, *polygons, fillcolor=None):
     given fill color.
 
     :param PIL.Image.Image image: the image to cut out
-    :param list[tuple[int, int]] polygons: the polygons to cut out
+    :param list[tuple[int,int]] polygons: the polygons to cut out
     :param fillcolor: the color to use for filling area outside of polygons
     """
     if polygons:
@@ -45,7 +45,7 @@ def cut_out_cv2(image, *polygons, fillcolor=None):
     given fill color.
 
     :param numpy.ndarray image: the numpy array representing the image
-    :param list[tuple[int, int]] polygons: the polygons to cut out
+    :param list[tuple[int,int]] polygons: the polygons to cut out
     :param fillcolor: the color to use for filling area outside of polygons
     """
     if polygons:

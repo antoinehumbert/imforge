@@ -37,7 +37,7 @@ def _get_transforms_params(polygon, im_width, im_height, clip=False):  # noqa
       + (left, top) are the coordinates of the top-left point of crop box in rotated image
       + (bottom, right) are the coordinates of the bottom-right point of the crop box in rotated image
 
-    :param list[tuple[int, int]] polygon: the list of points coordinates of the polygon to crop
+    :param list[tuple[int,int]] polygon: the list of points coordinates of the polygon to crop
     :param int im_width: image width
     :param int im_height: image height
     :param bool clip: if ``False`` (the default), the cropped image will include the whole polygon, even if some of its
@@ -46,7 +46,7 @@ def _get_transforms_params(polygon, im_width, im_height, clip=False):  # noqa
       minimal cropped image containing all the *visible* parts of polygon in original image.
     :return: parameters of the transformations to apply for crop in the form
       ((left_add, top_add, new_width, new_height), ((center_x, center_y), angle), (left, top, width, height))
-    :rtype: tuple[tuple[int, int, int, int], tuple[tuple[float, float], float], tuple[int, int, int, int]]
+    :rtype: tuple[tuple[int,int,int,int],tuple[tuple[float,float],float],tuple[int,int,int,int]]
     """
     points = np.array(clip_polygon(polygon, im_width, im_height) if clip else polygon, dtype=np.int0)
     (center_x, center_y), (width, height), angle = cv2.minAreaRect(points)
@@ -131,7 +131,7 @@ def crop_pil(image, polygon, fillcolor=None, cut_out=False, clip=False):
        coordinates are not included in the cropped image.
 
     :param PIL.Image.Image image: the (pillow) image to crop
-    :param list[tuple[int, int]] polygon: the list of points coordinates of the polygon to crop
+    :param list[tuple[int,int]] polygon: the list of points coordinates of the polygon to crop
     :param fillcolor: the color to use for filling area outside of polygon
     :param bool cut_out: if ``False`` (the default), the fillcolor is only used for filling areas outside of original
       image when doing crop. Il ``True``, then all areas outside of polygon are filled with fillcolor.
@@ -183,7 +183,7 @@ def crop_cv2(image, polygon, fillcolor=None, cut_out=False, clip=False):
        coordinates are not included in the cropped image.
 
     :param numpy.ndarray image: the (opencv) image to crop
-    :param list[tuple[int, int]] polygon: the list of points coordinates of the polygon to crop
+    :param list[tuple[int,int]] polygon: the list of points coordinates of the polygon to crop
     :param fillcolor: the color to use for filling area outside of polygon
     :param bool cut_out: if ``False`` (the default), the fillcolor is only used for filling areas outside of original
       image when doing crop. Il ``True``, then all areas outside of polygon are filled with fillcolor.
@@ -236,8 +236,8 @@ def crop(image, polygon, fillcolor=None, cut_out=False, clip=False):
        coordinates are not included in the cropped image.
 
     :param image: the (pillow) image to crop
-    :type image: PIL.Image.Image|numpy.ndarray
-    :param list[tuple[int, int]] polygon: the list of points coordinates of the polygon to crop
+    :type image: Union[PIL.Image.Image,numpy.ndarray]
+    :param list[tuple[int,int]] polygon: the list of points coordinates of the polygon to crop
     :param fillcolor: the color to use for filling area outside of polygon
     :param bool cut_out: if ``False`` (the default), the fillcolor is only used for filling areas outside of original
       image when doing crop. Il ``True``, then all areas outside of polygon are filled with fillcolor.
